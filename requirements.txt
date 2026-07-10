@@ -1,0 +1,14 @@
+croo-sdk
+pydantic
+httpx
+langgraph
+langchain-google-genai
+langchain-groq
+langchain
+python-dotenv
+tavily
+langchain_community
+langchain_tavily
+ipykernel
+wikipedia-api
+langchain-anthropic
