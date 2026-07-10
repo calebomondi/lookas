@@ -52,11 +52,11 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="PYRMYD2", lifespan=lifespan)
 
 
-@app.get("/")
+@app.get("/", methods=["GET", "HEAD"])
 async def root():
     return "ok"
 
 
-@app.get("/health")
+@app.get("/health", methods=["GET", "HEAD"])
 async def health():
     return "healthy"
