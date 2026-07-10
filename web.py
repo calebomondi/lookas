@@ -54,9 +54,9 @@ app = FastAPI(title="PYRMYD2", lifespan=lifespan)
 
 @app.get("/")
 async def root():
-    return {"status": "ok", "service": "pyrmyd2"}
+    return "ok"
 
 
 @app.get("/health")
 async def health():
-    return {"status": "healthy"}
+    return "healthy"
