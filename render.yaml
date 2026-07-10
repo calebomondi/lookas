@@ -2,8 +2,8 @@ services:
   - type: web
     name: pyrmyd2
     runtime: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn web:app --host 0.0.0.0 --port $PORT
+    buildCommand: pip install uv && uv sync --frozen
+    startCommand: uv run uvicorn web:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION
         value: "3.12"
