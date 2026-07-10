@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: pyrmyd2
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn web:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12"
+      - key: CROO_SDK_KEY
+        sync: false
+      - key: CROO_API_URL
+        value: "https://api.croo.network"
+      - key: CROO_WS_URL
+        value: "wss://api.croo.network/ws"
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: OPENCODE_API_KEY
+        sync: false
+      - key: DASHSCOPE_API_KEY
+        sync: false
+      - key: TAVILY_API_KEY
+        sync: false

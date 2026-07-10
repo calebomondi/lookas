@@ -1,4 +1,5 @@
 croo-sdk
+fastapi
 pydantic
 httpx
 langgraph
@@ -12,3 +13,4 @@ langchain_tavily
 ipykernel
 wikipedia-api
 langchain-anthropic
+uvicorn[standard]
