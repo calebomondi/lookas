@@ -14,6 +14,10 @@ class Config:
     groq_api_key: str = field(default_factory=lambda: environ.get("GROQ_API_KEY", ""))
     opencode_api_key: str = field(default_factory=lambda: environ.get("OPENCODE_API_KEY", ""))
 
+    base_price: float = field(default_factory=lambda: float(environ.get("BASE_PRICE", "0.05")))
+    per_analyst_price: float = field(default_factory=lambda: float(environ.get("PER_ANALYST_PRICE", "0.08")))
+    per_word_price: float = field(default_factory=lambda: float(environ.get("PER_WORD_PRICE", "0.05")))
+
     @classmethod
     def from_env(cls) -> "Config":
         return cls()
