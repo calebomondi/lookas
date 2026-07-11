@@ -3,8 +3,16 @@ import json
 import logging
 from croo import AgentClient, Config as CrooConfig, EventType, DeliverableType, DeliverOrderRequest
 import db
+from config import Config
 
 logger = logging.getLogger("pyrmyd2.provider")
+cfg = Config()
+
+
+def calculate_min_price(analysts: int, words: int) -> float:
+    """Calculate minimum acceptable price based on requirements."""
+    return cfg.base_price + (analysts * cfg.per_analyst_price) + (words * cfg.per_word_price)
+
 
 class ResearchProviderHandler:
     def __init__(self, client: AgentClient, agent):
@@ -31,18 +39,30 @@ class ResearchProviderHandler:
                     logger.warning("Negotiation %s missing topic, rejecting", event.negotiation_id)
                     await self.client.reject_negotiation(event.negotiation_id, "Missing topic in requirements")
                     return
+
+                max_analysts = reqs.get("max_analysts", 3)
+                word_count = reqs.get("word_count", 1000)
+                offered_price = float(neg.fund_amount or 0)
+                min_price = calculate_min_price(max_analysts, word_count)
+
+                if offered_price < min_price:
+                    reason = f"Price ${offered_price:.2f} below minimum ${min_price:.2f} for {max_analysts} analysts / {word_count} words"
+                    logger.warning("Rejecting negotiation %s: %s", event.negotiation_id, reason)
+                    await self.client.reject_negotiation(event.negotiation_id, reason)
+                    return
+
                 result = await self.client.accept_negotiation(event.negotiation_id)
                 order_id = result.order.order_id
                 logger.info(
-                    "Accepted negotiation %s for topic '%s', order %s",
-                    event.negotiation_id, topic, order_id,
+                    "Accepted negotiation %s for topic '%s', order %s (price: $%.2f)",
+                    event.negotiation_id, topic, order_id, offered_price,
                 )
                 db.record_order(
                     order_id=order_id,
                     negotiation_id=event.negotiation_id,
                     topic=topic,
-                    word_count=reqs.get("word_count", 1000),
-                    max_analysts=reqs.get("max_analysts", 3),
+                    word_count=word_count,
+                    max_analysts=max_analysts,
                     requester_agent_id=event.requester_agent_id,
                     service_id=event.service_id,
                     price=result.order.price or "",
