@@ -1,6 +1,6 @@
-# PYRMYD2
+# 🦉Lookas
 
-> An AI-powered deep research agent that generates multi-perspective reports through simulated expert interviews and real-time web search.
+> A deep research agent that generates multi-perspective reports through simulated expert interviews and real-time web search.
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
 [![LangGraph](https://img.shields.io/badge/built%20with-LangGraph-000000.svg)](https://github.com/langchain-ai/langgraph)
@@ -10,7 +10,7 @@
 
 ## Overview
 
-PYRMYD2 is a hierarchical multi-agent research system built with **LangGraph**. Given a research topic and a target word count, it autonomously:
+Lookas is a hierarchical multi-agent research system built with **LangGraph**. Given a research topic and a target word count, it autonomously:
 
 1. **Generates analyst personas** — each with a unique role, affiliation, and research focus
 2. **Conducts parallel interviews** — each analyst engages in multi-turn Q&A with an AI expert, backed by real-time **Tavily web search**
@@ -210,8 +210,8 @@ concl_limit   = max(50, int(word_count * 0.2))
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/pyrmyd2.git
-cd pyrmyd2
+git clone https://github.com/calebomondi/lookas.git
+cd lookas
 
 # Install with uv (recommended)
 uv sync
@@ -361,7 +361,7 @@ graph LR
 ## Project Structure
 
 ```
-pyrmyd2/
+lookas/
 ├── config.py                # Config dataclass, env var loading
 ├── main.py                  # Entry point: standalone or Croo provider mode
 ├── research_agent.py        # Core agent: graph, nodes, edges, LLM providers
