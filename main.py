@@ -53,7 +53,7 @@ async def main():
     handler = ResearchProviderHandler(client, agent)
     await handler.start()
 
-    logger.info("PYR▲MYD2 research agent running. Press Ctrl+C to stop.")
+    logger.info("🦉Lookas research agent running. Press Ctrl+C to stop.")
 
     stop = asyncio.Event()
     loop = asyncio.get_event_loop()
@@ -63,7 +63,7 @@ async def main():
 
     await handler.stop()
     await client.close()
-    logger.info("PYR▲MYD2 stopped.")
+    logger.info("🦉Lookas stopped.")
 
 
 if __name__ == "__main__":
