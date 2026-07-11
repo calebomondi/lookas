@@ -42,20 +42,21 @@ class ResearchProviderHandler:
 
                 max_analysts = reqs.get("max_analysts", 3)
                 word_count = reqs.get("word_count", 1000)
-                offered_price = float(neg.fund_amount or 0)
-                min_price = calculate_min_price(max_analysts, word_count)
 
-                if offered_price < min_price:
-                    reason = f"Price ${offered_price:.2f} below minimum ${min_price:.2f} for {max_analysts} analysts / {word_count} words"
-                    logger.warning("Rejecting negotiation %s: %s", event.negotiation_id, reason)
-                    await self.client.reject_negotiation(event.negotiation_id, reason)
-                    return
+                offered_price = float(neg.fund_amount or 0)
+                if neg.fund_amount:
+                    min_price = calculate_min_price(max_analysts, word_count)
+                    if offered_price < min_price:
+                        reason = f"Price ${offered_price:.2f} below minimum ${min_price:.2f} for {max_analysts} analysts / {word_count} words"
+                        logger.warning("Rejecting negotiation %s: %s", event.negotiation_id, reason)
+                        await self.client.reject_negotiation(event.negotiation_id, reason)
+                        return
 
                 result = await self.client.accept_negotiation(event.negotiation_id)
                 order_id = result.order.order_id
                 logger.info(
-                    "Accepted negotiation %s for topic '%s', order %s (price: $%.2f)",
-                    event.negotiation_id, topic, order_id, offered_price,
+                    "Accepted negotiation %s for topic '%s', order %s",
+                    event.negotiation_id, topic, order_id,
                 )
                 db.record_order(
                     order_id=order_id,
