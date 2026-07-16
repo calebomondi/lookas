@@ -355,7 +355,6 @@ def search_web(state: InterviewState):
     search_query = _invoke_structured_with_fallback(
         messages=[search_instructions] + state["messages"],
         schema=SearchQuery,
-        providers=[("groq", GROQ_MODELS)],
         log_label="search_web:search_query",
     )
     logger.info("Search query Tavily: %s", search_query.search_query)
