@@ -31,7 +31,7 @@ logging.basicConfig(
 logger = logging.getLogger("pyrmyd2.requester")
 
 REQUIREMENTS = {
-    "topic": "The impact of AI on healthcare diagnostics in 2026",
+    "topic": "How quantum computing threatens blockchain cryptography: assessing the risk to ECDSA/Schnorr signatures and SHA-256 hashing, and the state of post-quantum migration in major chains",
     "max_analysts": 3,
     "word_count": 800,
 }
